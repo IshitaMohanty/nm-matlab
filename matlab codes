@@ -183,3 +183,60 @@ disp(r 'Iteration No=' ,num2str (k)]);
 disp(['Error=' ,num2str(err)]);
 disp(['function value=' ,num2str (yc)]);
 disp('- - - - - - - - - - - -');
+
+
+GRAPH PLOT
+
+clc;
+clear all;
+close all;
+
+×= linspace(-5,5);
+f1 = x.^2-9;
+
+x1= linspace(-2,2);
+f2= x1.^5-x1-1;
+
+X2= linspace(-2,2);
+f3=x2.*exp(-x2);
+
+X3= linspace (-6,6);
+f4=2*cos(3*×3)-exp(x3);
+
+x4=linspace (-3,3);
+f5=(x4-1).^5;
+
+subplot(2,3,1)
+plot (x, f1)
+ax = gca;
+ax.XAxisLocation='origin';
+ax.YAxisLocation='origin';
+title('f(x)=×^2-9');
+
+subplot(2,3,2)
+plot (x1, f2)
+axl=gca;
+ax1.XAxisLocation='origin';
+ax1. YAxisLocation='origin';
+title('f(x)= (×^5)-x-1');
+
+subplot(2,3,3)
+plot (x2, f3)
+ax2=gca;
+ax2.XAxisLocation='origin';
+ax2.YAxisLocation='origin';
+title('f(x)=x2*exp(-x2)');
+
+subplot(2,3,4)
+plot (x3, f4)
+ax3=gca;
+ax3.XAxisLocation='origin';
+ax3.YAxisLocation='origin';
+title('f(x)=2cos(3x)-e^x');
+
+subplot(2,3,5)
+plot (x4, f5)
+ax4=gca;
+ax4.XAxisLocation='origin';
+ax4.YAxisLocation='origin';
+title('f(x)= (x-1)15');
