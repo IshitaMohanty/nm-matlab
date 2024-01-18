@@ -28,3 +28,48 @@ toc
 disp('--------------------------')
 disp(['Root=',num2str(c)]);
 disp(['Iteration No.=',num2str (k)]) ;
+
+REGULAFALSI
+
+Function file:
+
+function[x1,err, fx1,k]=regulafalsi(f,a,b,delta)
+fa=feval(f,a);
+fb=feval(f,b);
+if fa*fb>o
+error('choose a and b correctly');
+end
+for k=1:50
+Xl=(a*fb-b*fa)/(fb-fa);
+fx1=feval(f,x1);
+if fx1==0
+a=xl;
+b=Xl;
+elseif fa*fx1>0
+a=Xl;
+fa=fx1;
+else
+b=x1;
+fb=fx1;
+end
+if abs(b-a)‹delta
+break;
+end
+end
+xl=(a*fb-b*fa)/(fb-fa);
+err=abs(x1-a);
+
+Main file:
+
+clc;
+clear all;
+close all;
+f=inline('x.^5-x-1');
+a=-1;
+b=3;
+delta=10^(-7);
+tic
+[c,err,yc,k]=regulafalsi(f,a,b,delta);
+toc
+disp"--------------------------');
+disp(['Root=',num2str(c)]);
