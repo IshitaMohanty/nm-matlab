@@ -1,6 +1,8 @@
-Function file bisection:
+Function file Bisection:
+
 function [x1, err, fx1, k]=bisect (f,a,b, delta)
-fa=feval (f, a) ; fb=feval (f, b);
+fa=feval (f,a);
+fb=feval (f,b);
 if fa*fb>0
 error('choose a and b correctly');
 end
@@ -8,26 +10,39 @@ N=1+round((log (b-a)-log (delta))/log (2));
 for k=1:N
 x1=(a+b)/2; fx1=feval(f, x1);
 if fx1==0
-a=xl; b=x1;
-elseif fa*fx1>0 a=x1; fa=fx1;
-else b=x1;
+a=xl;
+b=x1;
+elseif fa*fx1>0 a=x1;
+fa=fx1;
+else
+b=x1;
 fb=fx1;
-end if (b-a)‹delta break;
 end
-end x1=(a+b)/2; err=abs(b-a);
+if (b-a)‹delta break;
+end
+end
+x1=(a+b)/2; err=abs(b-a);
 fx1=feval(f, ×1);
+
 Main file:
+
 cIc;
 clear all;
 close all;
-tic f=inline('x.^2-9'); a=2; b=3;
+tic f=inline('x.^2-9');
+a=2;
+b=3;
 delta=10^(-7);
 %delta=0
 [c, err, yc, k]=bisect(f, a,b, delta);
 toc
-disp('--------------------------')
+disp('------------------------------')
 disp(['Root=',num2str(c)]);
 disp(['Iteration No.=',num2str (k)]) ;
+disp(['Error=',num2str(err)]);
+disp(['fuction value=' ,num2str (yc)]);
+disp"-------------------------------');
+
 
 REGULAFALSI
 
@@ -71,5 +86,100 @@ delta=10^(-7);
 tic
 [c,err,yc,k]=regulafalsi(f,a,b,delta);
 toc
-disp"--------------------------');
+disp"------------------------------');
 disp(['Root=',num2str(c)]);
+disp(['Iteration NO=',num2str (k)]);
+disp(['Error=',num2str(err)]);
+disp(['fuction value=' ,num2str (yc)]);
+disp"-------------------------------');
+
+
+
+
+
+NEWTON
+
+Function file:
+
+function [x1, err, fx1,k]=newton(f, df, a, delta, eps)
+fa=feval (f,a);
+dfa=feval(df,a);
+if abs(dfa)<delta
+error ('too small slope")
+end
+for k=1:50
+xl=a-(fa/dfa);
+fx1=feval(df,×1);
+dfx1=feval(df, ×1);
+if abs ((X1-a)/X1)‹eps||abs(x1-a)‹delta
+break;
+else
+a=x1;
+fa=fx1;
+dfa=dfx1;
+end
+end
+x1=a-(fa/dfa);
+err=abs(x1-a);
+fx1=feval(df, ×1);
+end
+
+Main file:
+
+f=inline(' (x-1)^5'); df=inline('5* (x-1)^4'); a=-1;
+delta= 10^(-10); eps= 10^(-10);
+tic
+[c, err, yc,k]=newton(f, df, a, delta, eps);
+toc
+disp('- - - - - - - - - - - -');
+disp(['Root=', numzstr(c)]);
+disp(['Iteration NO=',num2str (k)]);
+disp(['Error=',num2str(err)]);
+disp(['fuction value=' ,num2str (yc)]);
+disp('- - - - - - - - - - - -');
+
+
+SECANT
+
+Function file:
+
+function [x1, err, fx1, k]=secant(f, a,b, delta)
+fa=feval (f, a);
+fb=feval (f,b);
+for k=1:50
+xl=b-(fb*(a-b))/(fa-fb);
+fx1=feval (f, x1) ;
+if fx1==0
+a=x1;
+bex1;
+elseif abs (b-a)›delta
+a=b;
+b=x1;
+fa=fb;
+fb=fx1;
+else
+break;
+end
+end
+x1=b-(fb*(a-b))/(fa-fb);
+err=abs (b-a);
+fx1=feval(f,×1);
+
+Main file:
+
+clc;
+clear all;
+close all;
+f=inline('2*cos (3*×)-exp(x)');
+a=-1;
+b=2;
+delta=10^(-10);
+tic
+[c,err,yc, k]=secant(f,a,b, delta);
+toc
+disp('- - - - - - - - - - - -');
+disp(['Root=' ,num2str (c)]).
+disp(r 'Iteration No=' ,num2str (k)]);
+disp(['Error=' ,num2str(err)]);
+disp(['function value=' ,num2str (yc)]);
+disp('- - - - - - - - - - - -');
